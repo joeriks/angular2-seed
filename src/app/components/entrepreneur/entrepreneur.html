@@ -1,0 +1,116 @@
+<div id="e-reg">
+
+    <div id="e-reg-header" class="cf">
+    <div id="admin-sign-in">
+        <a href="/min-sida/vatrumsanmalan/ny-anmalan">Ny anmälan</a>
+        |
+        <a href="/min-sida/vatrumsanmalan/tidigare-anmalningar">Tidigare anmälningar</a>
+    </div>
+
+    <h1>Ny anm&#228;lan</h1>
+</div><!-- /e-reg-header -->
+
+
+    <div id="e-reg-content">
+		<p>
+    Din våtrumsanmälan består av 4 steg, som du kan fylla i i den ordning du själv vill.
+    Vissa steg kräver att föregående steg är ifyllt, och är då låsta.</p>
+<ol id="progress" class="cf">
+    <li><span><a href="/min-sida/vatrumsanmalan/ny-anmalan">Beställning</a></span></li>
+        <li><span><a href="/min-sida/vatrumsanmalan/utforande">Utförande</a></span></li>
+            <li><span><a href="/min-sida/vatrumsanmalan/entreprenor">Entreprenör</a></span></li>
+        <li class="locked"><span><a href="/min-sida/vatrumsanmalan/granska-anmalan">Granska anmälan</a></span></li>
+</ol>
+
+        <span id="current-progress" class="third"></span>
+        <h2>
+            Entreprenör</h2>
+        <p>
+            Uppgifter markerade med * är obligatoriska.</p>
+        <!--<a id="save" class="black" href="javascript:;">Spara</a>-->
+        <form method="post" action="/min-sida/vatrumsanmalan/entreprenor" class="form-general cms" id="entrepreneur-form">
+        <!--<input type="submit" value="Spara" class="above-top-right cancel"/>-->
+        <div class="content-block">
+            <h3>
+                Företagets uppgifter</h3>
+            <p>
+                Testf&#246;retaget AB<br />
+                Auktorisationsnummer: 3333<br />
+                Län: Blekinge (K)
+            </p>
+        </div>
+        <!-- /.content-block -->
+        <div class="content-block">
+            <h3>
+                Kontaktperson *</h3>
+            <p>
+                Ange den person på ditt företag som ska få kopia av våtrumsanmälan.<br />
+                Välj en tidigare sparad kontaktperson i listan eller fyll i namn, telefonnummer
+                och epost.</p>
+            <div id="choose-contact">
+                <div class="row cols-1 cf">
+                    <div class="select col medium col-1">
+                        <select id="EntrepreneurContact" name="EntrepreneurContact">
+                        <option value="">Välj kontaktperson</option>
+                                <option value="3013">test</option>
+                                <option value="3043">test-29-april-2014</option>
+                        </select>
+                        <input type="hidden" id="EntrepreneurContactId" name="EntrepreneurContactId" value="0" />
+                        <ul>
+                            <li><a id="edit-contact" class="forward" href="javascript:;">Redigera befintlig kontaktperson</a></li>
+                            <li><a id="new-contact" class="forward" href="javascript:;">Lägg till ny kontaktperson</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <input type="hidden" name="ContactFormState" id="ContactFormState" value="new" />
+                
+                <div class="row cols-1 cf" id="chosen-contact">
+                    <div class="col col-1 medium">
+                        <p>
+                            <span id="SpanContactName">Anders</span><br />
+                            <span id="SpanContactEmail">Jon@gvk.se</span><br />
+                            <span id="SpanContactPhone">12345678900</span><br />
+                            <a href="javascript:;">Redigera kontaktperson</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div id="create-contact">
+                <div class="row cols-1 cf">
+                    <div class="col col-1 text medium">
+                                <label for="EntrepreneurContactName">Namn (f&#246;rnamn och efternamn): *</label>
+	<input type="text" name="EntrepreneurContactName" id="EntrepreneurContactName" value="Anders" class="required"  />
+
+                    </div>
+                </div>
+                <div class="row cols-1 cf">
+                    <div class="col col-1 text medium">
+                                <label for="EntrepreneurContactEmail">Epostadress: *</label>
+	<input type="text" name="EntrepreneurContactEmail" id="EntrepreneurContactEmail" value="Jon@gvk.se" class="required email"  />
+
+                    </div>
+                </div>
+                <div class="row cols-1 cf">
+                    <div class="col col-1 text medium">
+                                <label for="EntrepreneurContactPhone">Telefonnummer: *</label>
+	<input type="text" name="EntrepreneurContactPhone" id="EntrepreneurContactPhone" value="12345678900" class="required"  />
+
+                    </div>
+                </div>
+            </div>
+            <!-- /create-contact -->
+        </div>
+        <!-- /.content-block -->
+        <div id="e-reg-nav">
+            <div class="row cols-1 cf">
+                <div class="col col-1 submit-area">
+                    <a href="/min-sida/vatrumsanmalan/entreprenor" id="save-for-later">Spara anmälan för att fortsätta senare</a> 
+                    <a href="/min-sida/vatrumsanmalan/ny-anmalan?vatrumid=401012&cancel=1">Avbryt anmälan</a>
+                    <input id="e-reg-back" type="submit" value="Föregående" name="submit-previous" class="cancel" />
+                    <input id="e-reg-forward" type="submit" value="Nästa" name="submit-next" />
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
