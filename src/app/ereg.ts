@@ -1,20 +1,20 @@
 import {Component} from '@angular/core';
 import {Routes, ROUTER_DIRECTIVES} from '@angular/router';
 
-import {Home} from './components/home/home';
-import {Order} from './components/order/order';
-import {Execution} from './components/execution/execution';
-import {Preview} from './components/preview/preview';
-import {Entrepreneur} from './components/entrepreneur/entrepreneur';
-import {About} from './components/about/about';
+import {Home} from './pages/home/home';
+import {Order} from './pages/order/order';
+import {Execution} from './pages/execution/execution';
+import {Preview} from './pages/preview/preview';
+import {Entrepreneur} from './pages/entrepreneur/entrepreneur';
+import {About} from './pages/about/about';
 import {RepoBrowser} from './components/repo-browser/repo-browser';
 
 @Component({
-  selector: 'seed-app',
+  selector: 'ereg-app',
   providers: [],
   pipes: [],
   directives: [ROUTER_DIRECTIVES],
-  templateUrl: 'app/seed-app.html',
+  templateUrl: 'app/ereg.html',
 })
 @Routes([
   { path: '/',       component: Home,       },
@@ -25,7 +25,7 @@ import {RepoBrowser} from './components/repo-browser/repo-browser';
   { path: '/entrepreneur', component: Entrepreneur },
   { path: '/preview', component: Preview },
 ])
-export class SeedApp {
+export class EregApp {
 
   constructor() {}
 

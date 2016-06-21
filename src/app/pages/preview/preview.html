@@ -1,0 +1,76 @@
+<div id="e-reg">
+
+    <div id="e-reg-header" class="cf">
+        <div id="admin-sign-in">
+            <a href="/min-sida/vatrumsanmalan/ny-anmalan">Ny anmälan</a> |
+            <a href="/min-sida/vatrumsanmalan/tidigare-anmalningar">Tidigare anmälningar</a>
+        </div>
+
+        <h1>Granska anm&#228;lan</h1>
+    </div>
+    <!-- /e-reg-header -->
+
+
+    <!-- /e-reg-header -->
+    <div id="e-reg-content">
+        <p>
+            Din våtrumsanmälan består av 4 steg, som du kan fylla i i den ordning du själv vill. Vissa steg kräver att föregående steg
+            är ifyllt, och är då låsta.</p>
+        <ol id="progress" class="cf">
+            <li><span><a [routerLink]="['/order']">Beställning</a></span></li>
+            <li class="locked"><span><a [routerLink]="['/execution']">Utförande</a></span></li>
+            <li><span><a [routerLink]="['/entrepreneur']">Entreprenör</a></span></li>
+            <li class="locked"><span><a [routerLink]="['/preview']">Granska anmälan</a></span></li>
+        </ol>
+
+
+        <span id="current-progress" class="fourth"></span>
+        <h2>
+            Granska anmälan</h2>
+        <p>
+            När du klickar på Slutför kommer din anmälan skickas till länskontrollanten och registreras hos GVK. En kopia av din anmälan
+            ska också skickas till beställare och ev. kontaktperson, samt till kontaktpersonen på ditt företag.</p>
+        <p>
+            Hittar du något fel bland det du har fyllt i kan du gå tillbaka också rätta till det på länkarna ovan eller "Föregående"-knappen
+            nere på sidan.</p>
+        <form method="post" action="/min-sida/vatrumsanmalan/granska-anmalan" class="form-general">
+            <div class="content-block">
+                <h3>
+                    Kopia till beställare</h3>
+                <p>
+                    Du har angett att kopia ska skickas till:<br />jon@gvk.se</p>
+                <p>
+                    En kopia av din anmälan kommer att skickas till denna e-postadress när du klickar på Slutför.</p>
+                <p>
+                    <a class="forward" href="/pdfs/prel_best_vatrumsanmalan_401012.pdf" target="pdf" onclick="gvkAnalytics.trackVatrumEvent('Förhandsgranskat beställarens PDF', '401012')">
+                        Granska beställarens
+                        kopia
+                    </a></p>
+            </div>
+            <div class="content-block">
+                <h3>
+                    Kopia till kontaktperson hos ditt företag</h3>
+                <p>
+                    Du har angett att kopia ska skickas till:<br /> jonastest@programenta.se
+                </p>
+                <p>
+                    En kopia av din anmälan kommer att skickas till denna e-postadress när du klickar på Slutför.</p>
+                <p>
+                    <a class="forward" href="/pdfs/prel_anm_vatrumsanmalan_401012.pdf" target="pdf" onclick="gvkAnalytics.trackVatrumEvent('Förhandsgranskat entreprenörens PDF', '401012')">
+                        Granska ditt företags kopia
+                    </a></p>
+            </div>
+            <div id="e-reg-nav">
+                <div class="row cols-1 cf">
+                    <div class="col col-1 submit-area">
+                        <a href="/min-sida/vatrumsanmalan/ny-anmalan?vatrumid=401012&cancel=1">Avbryt anmälan</a>
+                        <input id="e-reg-back" type="submit" value="Tillbaka" name="submit-previous" />
+                        <input id="e-reg-forward" type="submit" value="Slutför" name="submit-finish" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- /e-reg-content -->
+</div>
+<!-- /e-reg -->

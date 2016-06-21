@@ -1,24 +1,25 @@
 <div id="e-reg">
     <div id="e-reg-header" class="cf">
         <div id="admin-sign-in">
-            <a href="/min-sida/vatrumsanmalan/ny-anmalan">Ny anmälan</a>
-            |
+            <a href="/min-sida/vatrumsanmalan/ny-anmalan">Ny anmälan</a> |
             <a href="/min-sida/vatrumsanmalan/tidigare-anmalningar">Tidigare anmälningar</a>
         </div>
 
         <h1>Ny anmälan</h1>
-    </div><!-- /e-reg-header -->
+    </div>
+    <!-- /e-reg-header -->
 
     <div id="e-reg-content">
         <p>
-            Din våtrumsanmälan består av 4 steg, som du kan fylla i i den ordning du själv vill.
-            Vissa steg kräver att föregående steg är ifyllt, och är då låsta.
+            Din våtrumsanmälan består av 4 steg, som du kan fylla i i den ordning du själv vill. Vissa steg kräver att föregående steg
+            är ifyllt, och är då låsta.
         </p>
+
         <ol id="progress" class="cf">
-            <li><span><a href="/min-sida/vatrumsanmalan/ny-anmalan">Beställning</a></span></li>
-            <li class="locked"><span>Utförande</span></li>
-            <li><span><a href="/min-sida/vatrumsanmalan/entreprenor">Entreprenör</a></span></li>
-            <li class="locked"><span>Granska anmälan</span></li>
+            <li><span><a [routerLink]="['/order']">Beställning</a></span></li>
+            <li class="locked"><span><a [routerLink]="['/execution']">Utförande</a></span></li>
+            <li><span><a [routerLink]="['/entrepreneur']">Entreprenör</a></span></li>
+            <li class="locked"><span><a [routerLink]="['/preview']">Granska anmälan</a></span></li>
         </ol>
 
         <span id="current-progress" class="first"></span>
@@ -28,7 +29,8 @@
         <p>
             Uppgifter markerade med * är obligatoriska.
         </p>
-        <form method="post" action="/min-sida/vatrumsanmalan/ny-anmalan" class="form-general cms" id="order-form" novalidate="novalidate" _lpchecked="1">
+        <form [ngFormModel]="orderForm" (ngSubmit)="onSubmit(orderForm.value)" method="post" action="/min-sida/vatrumsanmalan/ny-anmalan"
+            class="form-general cms" id="order-form" novalidate="novalidate" _lpchecked="1">
             <!--        <input type="submit" value="Spara" class="above-top-right cancel" />-->
             <div class="content-block">
                 <div class="row cols-1 cf">
@@ -57,14 +59,16 @@
                         </fieldset>
                     </div>
                 </div>
-                <div id="client-information" style="display: none;">
+                <div id="client-information">
                     <h3>
                         Beställarens uppgifter
                     </h3>
-                    <div class="row cols-1 cf" id="ExistingClient" style="display: none;">
+                    <div class="row cols-1 cf" id="ExistingClient">
                         <div class="select col medium col-1">
-                            <select id="Client" name="Client">
+                            <select id="Client" name="Client" [ngFormControl]="orderForm.controls['clientSelected']" (change)="changedSelectedClient($event.target.value)">
                                 <option value=""></option>
+
+                                <option *ngFor="let client of clients" [selected]="client.id===orderForm.controls.clientSelected.value" value="{{client.id}}">{{client.name}}</option>
 
 
 
@@ -82,53 +86,63 @@
                         <div class="row cols-1 cf" id="DivClientCompany">
                             <div class="col text col-1">
                                 <label for="ClientCompany">Företag: *</label>
-                                <input type="text" name="ClientCompany" id="ClientCompany" value="" class="required" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABHklEQVQ4EaVTO26DQBD1ohQWaS2lg9JybZ+AK7hNwx2oIoVf4UPQ0Lj1FdKktevIpel8AKNUkDcWMxpgSaIEaTVv3sx7uztiTdu2s/98DywOw3Dued4Who/M2aIx5lZV1aEsy0+qiwHELyi+Ytl0PQ69SxAxkWIA4RMRTdNsKE59juMcuZd6xIAFeZ6fGCdJ8kY4y7KAuTRNGd7jyEBXsdOPE3a0QGPsniOnnYMO67LgSQN9T41F2QGrQRRFCwyzoIF2qyBuKKbcOgPXdVeY9rMWgNsjf9ccYesJhk3f5dYT1HX9gR0LLQR30TnjkUEcx2uIuS4RnI+aj6sJR0AM8AaumPaM/rRehyWhXqbFAA9kh3/8/NvHxAYGAsZ/il8IalkCLBfNVAAAAABJRU5ErkJggg==&quot;); background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; background-repeat: no-repeat;">
+                                <input type="text" [ngFormControl]="orderForm.controls['clientCompany']" name="ClientCompany" id="ClientCompany" value=""
+                                    class="required" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABHklEQVQ4EaVTO26DQBD1ohQWaS2lg9JybZ+AK7hNwx2oIoVf4UPQ0Lj1FdKktevIpel8AKNUkDcWMxpgSaIEaTVv3sx7uztiTdu2s/98DywOw3Dued4Who/M2aIx5lZV1aEsy0+qiwHELyi+Ytl0PQ69SxAxkWIA4RMRTdNsKE59juMcuZd6xIAFeZ6fGCdJ8kY4y7KAuTRNGd7jyEBXsdOPE3a0QGPsniOnnYMO67LgSQN9T41F2QGrQRRFCwyzoIF2qyBuKKbcOgPXdVeY9rMWgNsjf9ccYesJhk3f5dYT1HX9gR0LLQR30TnjkUEcx2uIuS4RnI+aj6sJR0AM8AaumPaM/rRehyWhXqbFAA9kh3/8/NvHxAYGAsZ/il8IalkCLBfNVAAAAABJRU5ErkJggg==&quot;); background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; background-repeat: no-repeat;">
 
                             </div>
                         </div>
                         <div class="row cols-1 cf" id="DivClientName">
                             <div class="col text col-1">
                                 <label for="ClientName">Namn (förnamn och efternamn): *</label>
-                                <input type="text" name="ClientName" id="ClientName" value="Per Persson" class="required">
+                                <input type="text" [ngFormControl]="orderForm.controls['clientName']" name="ClientName" id="ClientName" value="Per Persson"
+                                    class="required">
 
                             </div>
                         </div>
                         <div class="row cols-1 cf">
                             <div class="text col col-1">
                                 <label for="ClientAddress">Adress:</label>
-                                <input type="text" name="ClientAddress" id="ClientAddress" value="storgatan 1" class="">
+                                <input type="text" [ngFormControl]="orderForm.controls['clientAddress']" name="ClientAddress" id="ClientAddress" value="storgatan 1"
+                                    class="">
 
                             </div>
                         </div>
                         <div class="row cols-1 cf">
                             <div class="text col small col-1">
                                 <label for="ClientZipcode">Postnummer</label>
-                                <input type="text" name="ClientZipcode" id="ClientZipcode" value="12345" class="">
+                                <input type="text" [ngFormControl]="orderForm.controls['clientZipCode']" name="ClientZipcode" id="ClientZipcode" value="12345"
+                                    class="">
 
                             </div>
                             <div class="text col small col-2">
                                 <label for="ClientCity">Postort</label>
-                                <input type="text" name="ClientCity" id="ClientCity" value="storstad" class="">
+                                <input type="text" [ngFormControl]="orderForm.controls['clientCity']" name="ClientCity" id="ClientCity" value="storstad"
+                                    class="">
 
                             </div>
                         </div>
                         <div class="row cols-1 cf">
                             <div class="text col small col-1">
                                 <label for="ClientPhone">Mobil/telefonnummer:</label>
-                                <input type="text" name="ClientPhone" id="ClientPhone" value="12345678" class="">
+                                <input type="text" [ngFormControl]="orderForm.controls['clientPhone']" name="ClientPhone" id="ClientPhone" value="12345678"
+                                    class="">
 
                             </div>
                         </div>
                         <div class="row cols-2 cf">
                             <div class="text col medium col-1">
                                 <label for="ClientEmail">E-postadress: *</label>
-                                <input type="text" name="ClientEmail" id="ClientEmail" value="per@1234.se" class="required email">
+                                <input type="text" [ngFormControl]="orderForm.controls['clientEmail']" name="ClientEmail" id="ClientEmail" value="per@1234.se"
+                                    class="required email">
 
 
                             </div>
                             <div class="checkbox align col medium col-2">
                                 <input type="hidden" name="ClientConfirmSendPostal" value="">
-                                <div class="custom-checkbox"><input type="checkbox" name="ClientConfirmSendPostal" id="ClientConfirmSendPostal" class=""><label for="ClientConfirmSendPostal">Beställaren saknar epostadress, jag skickar en kopia av anmälan till beställarens postadress.</label></div>
+                                <div class="custom-checkbox"><input type="checkbox" [ngFormControl]="orderForm.controls['clientConfirmSendPostal']" name="ClientConfirmSendPostal"
+                                        id="ClientConfirmSendPostal" class="">
+                                    <label for="ClientConfirmSendPostal">Beställaren saknar epostadress, jag skickar en kopia av anmälan till beställarens postadress.</label>
+                                </div>
 
 
                             </div>
@@ -143,12 +157,15 @@
                             <legend class="wrap" style="width:300px"><span>Kontaktperson (ex vid stickprovskontroll) *</span></legend>
                             <div class="fieldset-content" id="OtherPersonSameAsClient">
                                 <div class="radio">
-                                    <div class="custom-radio"><input type="radio" name="OtherPersonSameAsClient" value="Beställaren är kontaktperson" id="radio-same-person" class=""><label for="radio-same-person" class="">Beställaren är kontaktperson</label></div>
+                                    <div class="custom-radio"><input type="radio" name="OtherPersonSameAsClient" value="Beställaren är kontaktperson"
+                                            id="radio-same-person" class=""><label for="radio-same-person" class="">Beställaren är kontaktperson</label></div>
 
 
                                 </div>
                                 <div class="radio">
-                                    <div class="custom-radio"><input type="radio" name="OtherPersonSameAsClient" value="Annan person ska vara kontaktperson" id="radio-other-person" class="" checked="checked"><label for="radio-other-person" class="checked">Annan person ska vara kontaktperson</label></div>
+                                    <div class="custom-radio"><input type="radio" name="OtherPersonSameAsClient" value="Annan person ska vara kontaktperson"
+                                            id="radio-other-person" class="" checked="checked"><label for="radio-other-person"
+                                            class="checked">Annan person ska vara kontaktperson</label></div>
 
 
                                 </div>
@@ -198,7 +215,8 @@
                                 <div class="fieldset-content">
                                     <div class="checkbox alt">
                                         <input type="hidden" name="OtherPersonSendEmailCopyToClient" value="">
-                                        <div class="custom-checkbox"><input type="checkbox" name="OtherPersonSendEmailCopyToClient" id="OtherPersonSendEmailCopyToClient" class=""><label for="OtherPersonSendEmailCopyToClient" class="">Skicka kopia till kontaktpersonens e-postadress</label></div>
+                                        <div class="custom-checkbox"><input type="checkbox" name="OtherPersonSendEmailCopyToClient" id="OtherPersonSendEmailCopyToClient"
+                                                class=""><label for="OtherPersonSendEmailCopyToClient" class="">Skicka kopia till kontaktpersonens e-postadress</label></div>
 
 
                                     </div>
@@ -214,7 +232,9 @@
                         </div>
                         <div class="checkbox align col medium col-2">
                             <input type="hidden" name="OtherPersonEmailMissing" value="">
-                            <div class="custom-checkbox"><input type="checkbox" name="OtherPersonEmailMissing" id="OtherPersonEmailMissing" class=""><label for="OtherPersonEmailMissing" class="">E-postadress saknas</label></div>
+                            <div class="custom-checkbox"><input type="checkbox" name="OtherPersonEmailMissing" id="OtherPersonEmailMissing" class="">
+                                <label for="OtherPersonEmailMissing" class="">E-postadress saknas</label>
+                            </div>
 
 
                         </div>
@@ -229,7 +249,13 @@
                 <div class="row cols-1 cf">
                     <div class="text medium col col-1">
                         <label for="NumberOfRooms">Antal våtrum att anmäla *</label>
-                        <input type="text" name="NumberOfRooms" id="NumberOfRooms" value="1" class="required"><div class="slider ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"><div class="ui-slider-range ui-widget-header ui-slider-range-min" style="width: 1%;"></div><a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="left: 1%;"></a></div>
+                        <input type="text" name="NumberOfRooms" id="NumberOfRooms" value="1" class="required" [ngFormControl]="orderForm.controls['numberOfRooms']"
+                            required>
+                        <div class="alert alert-danger" *ngIf="!orderForm.controls.numberOfRooms.valid">Ange antal våtrum</div>
+                        <div class="slider ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all">
+                            <div class="ui-slider-range ui-widget-header ui-slider-range-min" style="width: 1%;"></div>
+                            <a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="left: 1%;"></a>
+                        </div>
 
                         <p class="help">
                             Om du inte vet exakt, ange ungefärligt antal.

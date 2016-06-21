@@ -2,13 +2,13 @@ import {Component} from '@angular/core';
 
 @Component({
   selector: 'home',
-  templateUrl: 'app/components/entrepreneur/entrepreneur.html',
-  styleUrls: ['app/components/entrepreneur/entrepreneur.css'],
+  templateUrl: 'app/pages/home/home.html',
+  styleUrls: ['app/pages/home/home.css'],
   providers: [],
   directives: [],
   pipes: []
 })
-export class Entrepreneur {
+export class Home {
 
   constructor() {}
 
